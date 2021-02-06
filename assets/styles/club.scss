@@ -1,0 +1,35 @@
+#club-section{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 250px;
+}
+
+#club-section .dark-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 250px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.text-shadow-club{
+    text-shadow: 2px 2px 4px #000000;
+}
+
+//gestion du formulaire de connexion
+.input-group-bg{
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: solid 3px #213496 !important;
+}
+.border-left-none{
+    border: none !important;
+    border-bottom: solid 3px #213496 !important;
+    color: #213496 !important;
+}
+
+//Gestion de la couleur des icons en accord avec les couleurs de l'estm
+.icon-estm-blue{
+    color: #213496;
+}

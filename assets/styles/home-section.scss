@@ -1,0 +1,54 @@
+.red{
+    background-color: red;
+}
+
+#home-section{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 450px;
+}
+
+#home-section .dark-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 450px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#home-section .home-inner{
+    padding-top: 70px;
+}
+#home-section h1, #home-section h4{
+    color: white;
+}
+
+.body-begin{
+    padding-top: 70px;
+}
+
+#second-section hr{
+    border: none;
+    height: 5px;
+}
+
+.estm-text-color-blue{
+    color: #213496;
+}
+.estm-text-color-green{
+    color: #00903E;
+}
+
+.activity-card{
+    max-width: 16rem;
+    border: 1px solid rgb(102, 99, 99);
+    background-color: #F1F9FF;
+}
+
+.activity-card:hover{
+    box-shadow: 2px 2px 25px black;
+}
+
+

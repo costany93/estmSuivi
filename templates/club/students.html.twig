@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container body-begin">
+        
+        {#Block barre de naivagation du club#}
+        <div>
+            {% include "shared/_navPillClub.html.twig" with {'club': club } %} 
+        </div>
+        <table class="table table-bordered table-striped mt-2">
+            <thead>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Sexe</th>
+                <td>Email</td>
+                <th>Classe</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Action</th>
+                {% endif %}
+                
+            </thead>
+            <tbody>
+                {% for etudiant in club.etudiants %}
+                    {% set personne = etudiant.user %}
+                    {% set club = etudiant.club %}
+                    <tr>
+                        <td>{{personne.firstname}}</td>
+                        <td>{{personne.lastname}}</td>
+                        <td>{{personne.sexe}}</td>
+                        <td>{{personne.email}}</td>
+                        <td>{{etudiant.classe.niveau}} {{etudiant.filiere.nom}}</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td>
+                                {% if club.president is not null %}
+                                    {% if etudiant.president is not null %}
+                                    <a href="{{path('president_destituate', {id: etudiant.president.id})}}" class="btn btn-success">Destituer le président</a>
+                                    {% else %}
+                                        <button type="button" class="btn btn-danger">Le club a un president</button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{path('president_new', {id: etudiant.id})}}" class="btn btn-danger">Définir comme président</a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+{% endblock %}

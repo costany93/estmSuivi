@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un nouvelle utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        <h1>Nouvelle étudiant</h1>
+        {{form_start(form)}}
+            {{form_row(form.firstname)}}
+        {{form_end(form)}}
+    </div>
+{% endblock %}

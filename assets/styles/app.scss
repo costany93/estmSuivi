@@ -1,0 +1,77 @@
+
+$link-color: white;
+
+.estmGreen{
+    background-color: #00903E;
+}
+.estmBlue{
+    background-color: #213496;
+    .navbar-dark .navbar-nav .nav-link {
+        color: white;
+    }
+}
+
+.btn-estm-blue{
+    background-color: #213496 !important;
+    color: white !important;
+}
+.btn-estm-blue:hover{
+    background-color: #4a5bb4 !important;
+    color: white !important;
+}
+
+.btn-estm-green{
+    background-color: #00903E !important;
+    color: white !important;
+}
+.btn-estm-green:hover{
+    background-color:#168546 !important;
+    color: white !important;
+}
+
+.card {
+    width: 18rem;
+}
+
+.navbar-logo{
+    max-width: 80px;
+    max-height: 80px;
+}
+.icon-stat-size{
+    font-size: 40px;
+}
+.club-welcome-sentence{
+    width: 100%;
+    height: 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.club-stat-block{
+    width: 100px;
+    height: 100px;
+    border: 2px solid#213496
+}
+.greenStat{
+    background-color: #67db99;
+}
+
+.ombre{
+    box-shadow: -15px 15px 12px 5px rgba(48, 48, 80, 0.2);
+}
+
+.login-hr{
+    border: none;
+    height: 2px;
+    width: 60%;
+    background-color: #00903E;
+}
+
+.image_size{
+    width: auto;
+    height: 500px;
+    object-fit: cover;
+}
+@import './home-section.scss';
+@import './club.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+

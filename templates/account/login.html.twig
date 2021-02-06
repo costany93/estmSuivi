@@ -1,0 +1,55 @@
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+</head>
+
+
+{% block stylesheets  %}
+            {{encore_entry_link_tags('app')}}
+        {% endblock %}
+{% block body %}
+    <div class="container body-begin">
+        {% if hasError %}
+            <div class="alert alert-danger">
+                une erreur s'est produite, nom d'utilisateur ou mot de passe incorrect
+            </div>
+        {% endif %}
+        
+        <div class="row border mt-5 ombre">
+            <div class="col-md-4 my-5">
+                <img src="{{asset('build/images/logo.png')}}" class="img-fluid" alt="">
+                <h5 class="text-center estm-text-color-blue">Des formations innovantes, reconnues et de qualités </h5>
+            </div>
+            <div class="col-md-8 my-5">
+                <h3 class="text-center estm-text-color-blue">Se connecter à son compte</h3>
+                <hr class="login-hr">
+                <form action="{{path('account_login')}}" method="post">
+                    <div class="input-group my-4">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text input-group-bg">
+                                <i class="fas fa-user icon-estm-blue"></i>
+                            </div>
+                        </div>
+                        <input type="text" name="_username" id="_username" placeholder="Entrer votre email" class="form-control border-left-none" value={{lastname}}> 
+                    </div>
+                    <div class="input-group my-4">
+                        <div class="input-group-prepend transparent">
+                            <div class="input-group-text input-group-bg">
+                                <i class="fas fa-key icon-estm-blue"></i>
+                            </div>
+                        </div>
+                        <input type="password" name="_password" id="_password" placeholder="Entrer votre mot de passe" class="form-control border-left-none"> 
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-estm-blue">
+                            Se connecter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{encore_entry_script_tags('app')}}
+{% endblock %}

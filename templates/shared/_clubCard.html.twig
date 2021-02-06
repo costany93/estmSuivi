@@ -1,0 +1,76 @@
+<div class="col-lg-5 ml-4 border">
+                <div class="row">
+        <div class="col-lg-6 bg-light">
+            <p>{{club.nom}}</p>
+            <p>{{club.description | slice(0,200)}}...</p>
+            <p class="estm-text-color-blue">{{club.etudiants | length()}} membres</p>
+            {#On check si utilisateur connecté est un étudiant#}
+                                    {% if app.user.etudiant %}
+                                        {#si oui on check si il appartient déja à un club#}
+                                        {% set etudiant = app.user.etudiant %}
+                                        {% if etudiant.club is not null %}
+                                            {% if etudiant.club.nom == club.nom %}
+                                                <a href="{{path('club_acceuil',{slug: club.slug})}}" class="btn-success btn btn-block">
+                                                        <i class="far fa-thumbs-up"></i>
+                                                        Accéder au club
+                                                    </a>
+                                                    {% if etudiant.membership is null %}
+                                                        {% if etudiant.president is null %}
+                                                            <a href="{{path('adhesion_quit',{slug: club.slug})}}" class="btn-danger btn btn-block">
+                                                                <i class="fas fa-arrow-circle-left"></i>
+                                                                Quittez le club
+                                                        </a>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <Button type="button" class="btn-primary btn btn-block">
+                                                                <i class="fas fa-arrow-circle-left"></i>
+                                                                Demande de sorti en cours de traitement
+                                                        </Button>
+                                                    {% endif %}
+                                                    
+                                            {% else %}
+                                                <button type="button" class="btn-danger btn btn-block">
+                                                        <i class="fas fa-user-lock"></i>
+                                                        Pas membre
+                                                    </button>
+                                            {% endif %}
+                                        {#si non on lui laisse la possibilité d'adhérer à un club#}
+                                        {% else %}
+
+                                            {#Si il n'a pas encore fais une demande d'adhesion on lui laisse la possibilité de faire une demande#}
+                                            {% if etudiant.membership is null %}
+                                                <a href="{{path('adhesion_new',{slug: club.slug})}}" class="btn-success btn btn-block">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                    Adhérer au club
+                                                </a>
+                                            {% else %}
+                                            {#Si non #}
+                                                {% if etudiant.membership.club.nom == club.nom %}
+                                                    <Button type="button" class="btn-success btn btn-block">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                    Demande en cours de traitement
+                                                </Button>
+                                                {% else %}
+                                                    <Button type="button" class="btn-danger btn btn-block">
+                                                    <i class="fas fa-user-lock"></i>
+                                                    Déjà une demande
+                                                </Button>
+                                                {% endif %}
+                                                
+
+                                            {% endif %}
+                                            
+                                        {% endif %}
+                                    {# si ce n'est pas un étudiant on lui donne la possibilité de voir les informations du club#}
+                                    {% else %}
+                                        <a href="{{path('club_acceuil',{slug: club.slug})}}" class="btn-primary btn btn-block">
+                                            <i class="far fa-thumbs-up"></i>
+                                            Informations du club
+                                        </a>
+                                    {% endif %}
+        </div>
+        <div class="col-lg-6 estmBlue">
+            <img src="{{asset('uploads/' ~ club.coverImage)}}" alt="" class="img-fluid">
+        </div>
+    </div>
+</div>

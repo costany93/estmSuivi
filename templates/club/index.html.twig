@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Club - ESTM{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        <div class="row">
+            {% for club in clubs %}
+                {% include "shared/_clubCard.html.twig" with {'club': club} %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,110 @@
+<div class="col-md-4 my-2">
+    <div class="card" style="width: 19rem;">
+    {% if is_granted('ROLE_PRESIDENT_CLUB') or is_granted('ROLE_ADMIN') %}
+        <div class="card-header">
+            <a href="{{path('participation_index',{slug: activity.slug})}}" class="btn btn-block btn-primary">Valider les participations</a>
+        </div>
+    {% endif %}
+    
+    <img class="card-img-top" src="{{asset('build/images/logo.png')}}" alt="Card image cap">
+    <ul class="list-group list-group-flush mt-1">
+        <li class="list-group-item">
+            <i class="fas fa-map-marker-alt"></i>
+            {{activity.lieu}}
+        </li>
+        <li class="list-group-item">
+            <i class="fas fa-calendar-alt"></i>
+            {{activity.startDate|date('d-m-Y H')}}H
+        </li>
+    </ul>
+    <div class="card-body">
+        <h5 class="card-title">Activité {{activity.club.nom}}</h5>
+        <p class="card-text">{{activity.description | slice(0,150)}}...</p>
+        {% if app.user == true %}
+            {% if app.user.etudiant == true %}
+                {% set etudiant = app.user.etudiant %}
+            {% endif %}
+        {% endif %}
+        <div class="row">
+
+            {#On teste si l'étudiant n'a pas des participation, si c'est vide on lui laisse la possibilité de participer#}
+            {% if etudiant.participations is not defined or etudiant.participations is empty %}
+                {#On teste si l'utilisateur n'est pas un administrateur, si c'est le cas on affiche le boutton de participation#}
+                {% if not is_granted('ROLE_ADMIN') %}
+                    <div class="col-md-6">
+                        <a href="{{path('participation_new',{slug: activity.slug})}}" class="btn btn-success btn-block">
+                            <i class="fas fa-chevron-circle-down"></i>
+                            Participer
+                        </a>
+                    </div>
+                {% endif %}
+                
+            {#Si il a des participation on rentre dans ce else#}
+            {% else %}
+                {#On teste si l'activité n'a des participations, si c'est vide on laisse a l'utulisateur qui est l'étduiant la possibilité d'y participer#}
+                {% if activity.participations is empty %}
+                    <div class="col-md-6">
+                        <a href="{{path('participation_new',{slug: activity.slug})}}" class="btn btn-warning btn-block">
+                            <i class="fas fa-chevron-circle-down"></i>
+                            Participer
+                        </a>
+                    </div>
+                {#Si ce n'est pas vide on rentre dans ce else#}
+                {% else %}
+                    {#On initialise une variable var qui nous permettra de savoir si l'étudiant a participé à l'activité#}
+                    {% set var = 0 %}
+                    {% for participation in activity.participations %}
+                            {% if participation.etudiant.id == etudiant.id %}
+                            {#Si oui la variable reçois 1#}
+                            {% set var = 1 %}
+                            {% if participation.state == true %}
+                                <div class="col-md-6">
+                                    <Button type="button" class="btn btn-success btn-block">
+                                        <i class="fas fa-chevron-circle-down"></i>
+                                        Validé
+                                    </Button>
+                                </div>
+                            {% elseif participation.state == 0 %}
+                                <div class="col-md-6">
+                                    <Button type="button" class="btn btn-danger btn-block">
+                                        Invalidé
+                                        <i class="fas fa-smile-wink"></i>
+                                    </Button>
+                                </div>
+                            {% else %}
+                                <div class="col-md-6">
+                                    <Button type="button" class="btn btn-danger btn-block">
+                                        <i class="fas fa-chevron-circle-down"></i>
+                                        Déjà
+                                        <i class="fas fa-smile-wink"></i>
+                                    </Button>
+                                </div>
+                            {% endif %}
+                            
+                        {% endif %}
+                        
+                    {% endfor %}
+
+                    {% if var == 0 %}
+                        <div class="col-md-6">
+                                <a href="{{path('participation_new',{slug: activity.slug})}}" class="btn btn-primary btn-block">
+                                    <i class="fas fa-chevron-circle-down"></i>
+                                    Participer
+                            </a>
+                        </div>
+                    {% endif %}
+                    
+                {% endif %}
+                
+            {% endif %}
+            
+            <div class="col-md-6">
+                <a href="{{path('activity_show', {slug: activity.slug})}}" class="btn btn-info btn-block">
+                    <i class="fas fa-info-circle"></i>
+                    Infos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

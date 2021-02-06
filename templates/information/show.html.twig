@@ -1,0 +1,29 @@
+{% include "base.html.twig" %}
+
+{% block title %}Activité{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        {% include "shared/_navPillClub.html.twig" with {'club': information.club} %}
+
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <div>
+                    <p>Date <br>{{information.createdAt | date('Y-m-d')}}</p>
+                </div>
+                <hr>
+                <div>
+                    <p>Club <br>{{information.club.nom}}</p>
+                </div>
+            </div>
+            <div class="col-md-8 border-left border-right">
+                <div>
+                    <p><strong>Titre</strong> {{information.title}}</p>
+                </div>
+                <div>
+                    <p>Description <br> {{information.content}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

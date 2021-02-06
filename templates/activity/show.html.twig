@@ -1,0 +1,63 @@
+{% include "base.html.twig" %}
+
+{% block title %}Activité{% endblock %}
+
+{% block body %}
+    <div class="container body-begin ">
+        {% include "shared/_navPillClub.html.twig" with {'club': activity.club} %}
+        {% if is_granted('ROLE_PRESIDENT_CLUB') or is_granted('ROLE_ADMIN') %}
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-4 mt-5">
+                    <a href="{{path('participation_index', {slug: activity.slug})}}" class="btn btn-estm-green btn-block">Valider les participations</a>
+                </div>
+                <div class="col-lg-4 mt-5">
+                    <a href="{{path('image_new', {slug: activity.slug})}}" class="btn btn-estm-blue btn-block">Joindre des images</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <div>
+                    <p>Date <br>{{activity.startDate | date('Y-m-d')}}</p>
+                </div>
+                <hr>
+                <div>
+                    <p>Lieu <br>{{activity.lieu}}</p>
+                </div>
+                <hr>
+                <div>
+                    <p>Club <br>{{activity.club.nom}}</p>
+                </div>
+            </div>
+            <div class="col-md-6 border-left border-right">
+                <div>
+                    <p><strong>Titre</strong> {{activity.title}}</p>
+                </div>
+                <div>
+                    <p>Description <br> {{activity.description}}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <p>Participant</p>
+                {% for participation in activity.participations %}
+                    {% set etudiant = participation.etudiant.user %}
+                    {% if participation.state == true %}
+                        <p class="text-success">{{etudiant.firstname}} {{etudiant.lastname}}</p>
+                    {% else %}
+                        <p class="text-danger">{{etudiant.firstname}} {{etudiant.lastname}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% if activity.images is not empty %}
+            <h2 class="text-center estm-text-color-blue">Images de l'activité </h2>
+            <div class="row mt-5">
+                {% for image in activity.images %}
+                    <div class="col-lg-4 mt-2">
+                        <img src="{{asset('uploads/' ~ image.name)}}" alt="" class="img-fluid">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

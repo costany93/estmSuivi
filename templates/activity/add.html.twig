@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container body-begin">
+        {% include "shared/_navPillClub.html.twig" with {'slug': club.slug} %}
+        <h1>Ajouter une nouvelle activité</h1>
+        {{form_start(form)}}
+            {{form_widget(form)}}
+            <button type="submit"  class="btn btn-primary">
+                Créer l'activité
+            </button>
+        {{form_end(form)}}
+    </div>
+{% endblock %}

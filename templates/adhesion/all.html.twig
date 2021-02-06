@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container body-begin">
+        
+        {% include "shared/_navPillClub.html.twig" with {'club': club}%}
+        <h4 class="mt-3 text-center">Veuillez traiter les demandes d'entrée et de sorti du club</h4>
+        <table class="table table-bordered table-striped mt-3">
+            <thead>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Motif d'entrée ou de sorti du club</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for adhesion in club.memberships %}
+                    {% set personne = adhesion.etudiant.user %}
+                    <tr {% if adhesion.state == 0 %}class="table-danger" 
+                        {% else %}
+                            class="table-success"
+                    {% endif %}
+                    >
+                        <td>{{personne.firstname}}</td>
+                        <td>{{personne.lastname}}</td>
+                        <td>{{adhesion.content}}</td>
+                        <td>
+                            {% if adhesion.state == false %}
+                                <a href="{{path('club_quit_etudiant',{id: adhesion.etudiant.id})}}" class="btn btn-danger">Sortir du club</a>
+                            {% else %}
+                                <a href="{{path('club_join_etudiant',{id: adhesion.etudiant.id})}}" class="btn btn-success">Faire adhérer au club</a>
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
