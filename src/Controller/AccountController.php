@@ -123,6 +123,20 @@ class AccountController extends AbstractController
             'hasError' => $error
         ]);
     }
+
+    /**
+     * permet de voir son profil étudiant
+     * @Route("/account/{id}/user", name="account_user_profile")
+     * @param User $user
+     * @return Response
+     */
+    public function profile(User $user){
+
+        return $this->render('account/profile.html.twig',[
+            'user' => $user
+        ]);
+    }
+
     /**
      * permet de se déconnecter
      * @Route("/logout", name="account_logout")

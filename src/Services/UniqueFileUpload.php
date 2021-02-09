@@ -2,8 +2,12 @@
 
 namespace App\Services;
 
-class UniqueFileUpload{
-    public function getName( $image){
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class UniqueFileUpload extends AbstractController{
+    
+    public function getName(UploadedFile $image){
 
         //génére un nom unique pour le fichier
         $fichier = md5(uniqid()).'.'.$image->guessExtension();
@@ -13,5 +17,7 @@ class UniqueFileUpload{
             $this->getParameter('images_directory'),
             $fichier
         );
+
+        return $fichier;
     }
 }

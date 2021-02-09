@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+{% block Title %}Profile de {etudiant.user.firstname}{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{asset('build/images/logo.png')}}" alt="" class="img-fluid rounded">
+            </div>
+            <div class="col-lg-8">
+                <div class="">
+                    {% if is_granted('ROLE_ETUDIANT') %}
+                    <h4>{{user.firstname}}</h4>
+                    <h5>{{user.lastname}}</h5>
+                    <h6>{{user.etudiant.classe.niveau}} en {{user.etudiant.filiere.nom}}</h6>
+                    {% else %}
+                        <h5>{{user.firstname}}</h5>
+                        <h6>{{user.lastname}} </h6>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% if is_granted('ROLE_ETUDIANT') %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <p class="text-center">Participations</p>
+                    {% set counter = 0 %}
+                    {% if user.etudiant.participations is not empty %}
+                        {% for participation in user.etudiant.participations %}
+                            {% set counter = counter + 1 %}
+                        {% endfor %}
+                    {% endif %}
+                    <a href="#" class="btn btn-estm-blue btn-block">
+                        {{counter}}
+                    </a>
+                </div>
+                <div class="col-lg-4">
+                    <p class="text-center">Club</p>
+                    
+                    {% if user.etudiant.club is not null %}
+                        <a href="{{path('club_acceuil',{slug: user.etudiant.club.slug})}}" class="btn btn-estm-green btn-block">{{user.etudiant.club.nom}}</a>
+                    {% else %}
+                        <a href="{{path('club_index')}}" class="btn btn-estm-green btn-block">Rejoignez un club</a>
+                    {% endif %}
+                    
+                </div>
+                <div class="col-lg-4">
+                    <p class="text-center">%</p>
+                    <a href="#" class="btn btn-estm-blue btn-block">
+                        {% if user.etudiant.club is not null %}
+                            50%
+                        {% else %}
+                            Veuillez rejoindre un club
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <hr class="my-5">
+            <h4 class="text-center">Activités</h4>
+            <div class="row">
+                {% if user.etudiant.participations is not empty %}
+                    {% for participation in user.etudiant.participations %}
+                        {% include "shared/_cardActivity.html.twig" with {'activity': participation.activity } %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Club;
 use App\Entity\Etudiant;
 use App\Form\ClubType;
 use App\Repository\ClubRepository;
+use App\Services\UniqueFileUpload;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -135,9 +136,10 @@ class ClubController extends AbstractController
          * permet de créer un nouveau club
          * @route("/club/create", name="club_create")
          * @param Request
+         * @param UniqueFileUpload $uniqueFileUpload
          * @return Response
          */
-        public function create(Request $request):Response
+        public function create(Request $request, UniqueFileUpload $uniqueFileUpload):Response
         {
             $club = new Club();
 
@@ -150,14 +152,8 @@ class ClubController extends AbstractController
                 //je récupère l'image
                 $coverImage = $form->get('coverImage')->getData();
 
-                //je génère le nom de l'image
-                $fichier = md5(uniqid()).'.'.$coverImage->guessExtension();
-
-                //j'envoie l'image dans le dossier public/upload
-                $coverImage->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
+                //cette fonction permet de crée le nom du fichier et de le déplacé dans le dossier public/uplaods
+                $fichier = $uniqueFileUpload->getName($coverImage);
 
                 //je joins le nom du fichier dans la base de donnée
                 $club->setCoverImage($fichier);

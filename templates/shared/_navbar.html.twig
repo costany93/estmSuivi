@@ -25,7 +25,7 @@
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" id="navbarAccountLink" data-toggle="dropdown">{{app.user.lastname}}</a>
                                 <div class="dropdown-menu dropdown-menu-right" arial-labelledby="navbarAccountLink">
-                                    <a href="#" class="dropdown-item">Mon compte</a>
+                                    <a href="{{path('account_user_profile',{id: app.user.id})}}" class="dropdown-item">Mon compte</a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{path('account_logout')}}" class="dropdown-item">Déconnexion</a>
                                 </div>
