@@ -44,7 +44,7 @@ class Activity
 
     /**
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="activities")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $club;
 

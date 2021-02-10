@@ -47,7 +47,7 @@ class Information
 
     /**
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="informations")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $club;
 

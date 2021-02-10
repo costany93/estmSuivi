@@ -90,7 +90,11 @@
             <div class="container ">
                 <div class="row">
                     {% for activity in activities %}
-                        {% include "shared/_cardActivity.html.twig" with {'activity': activity} %}
+                        {% if activity.club is not null %}
+                            {% include "shared/_cardActivity.html.twig" with {'activity': activity} %}
+                        {% else %}
+                            {% include "shared/_cardActivityAmicale.html.twig" with {'activity': activity} %}
+                        {% endif %}
                     {% endfor %}
                 </div>
 
@@ -111,7 +115,11 @@
             <div class="container ">
                 <div class="row">
                     {% for information in informations %}
-                        {% include "shared/_cardInfo.html.twig" with {'information': information} %}
+                        {% if information.club is null %}
+                            {% include "shared/_cardAmicaleInfo.html.twig" with {'information': information} %}
+                        {% else %}
+                            {% include "shared/_cardInfo.html.twig" with {'information': information} %}
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

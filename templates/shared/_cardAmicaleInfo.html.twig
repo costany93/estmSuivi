@@ -1,0 +1,16 @@
+<div class="activity-card p-2 m-2">
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="estm-text-color-blue">{{information.createdAt | date('d-m-Y H')}}</p>
+        </div>
+        <div class="col-lg-12">
+            {{information.content|slice(0,150)}}...
+        </div>
+        <div class="col-lg-6">
+            <p class="estm-text-color-blue">Amicale ESTM</p>
+        </div>
+         <div class="col-lg-6">
+            <a href="{{path('amicale_information_show',{slug: information.slug})}}" class="estm-text-color-blue">Plus d'infos></a>
+        </div>
+    </div>
+</div>

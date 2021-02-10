@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container body-begin">
+        <h1>Ajouter une nouvelle activité de l'amicale</h1>
+        {{form_start(form)}}
+            {{form_widget(form)}}
+            <button type="submit"  class="btn btn-primary">
+                Créer l'activité
+            </button>
+        {{form_end(form)}}
+    </div>
+{% endblock %}

@@ -25,7 +25,7 @@ class ParticipationController extends AbstractController
      * @Route("/participation/{slug}/new", name="participation_new")
      * @param Activity $activity
      * @return Response
-     *  @Security("(is_granted('ROLE_ETUDIANT') and user.getEtudiant().getClub() == activity.getClub()) or is_granted('ROLE_ADMIN')", message="Vous n'avez pas le droit d'accéder à ce club car ce n'est pas le votre")
+     *  @Security("is_granted('ROLE_ETUDIANT') or is_granted('ROLE_ADMIN')", message="Vous n'avez pas le droit d'accéder à ce club car ce n'est pas le votre")
      */
     public function new(Activity $activity): Response
     {
@@ -40,9 +40,13 @@ class ParticipationController extends AbstractController
         $this->em->flush();
 
         $this->addFlash('success','Vous avez demandez à participé');
-        return $this->redirectToRoute('activity_index',[
-            'slug' =>$etudiant->getClub()->getSlug()
-        ]);
+        if($participation->getActivity()->getClub() == null){
+            return $this->redirectToRoute('amicale');
+        }else{
+            return $this->redirectToRoute('activity_index',[
+                'slug' =>$etudiant->getClub()->getSlug()
+            ]);
+        }
     }
 
     /**
@@ -75,12 +79,18 @@ class ParticipationController extends AbstractController
         $this->em->flush();
 
         $this->addFlash("success","Vous avez validé la participation de ".$etudiant->getFirstname()." ".$etudiant->getLastname());
-        return $this->redirectToRoute('participation_index',[
-            'slug' => $participation->getActivity()->getSlug()
-        ]);
+        if($participation->getActivity()->getClub() == null){
+            return $this->redirectToRoute('amicale_participation_index',[
+                'slug' => $participation->getActivity()->getSlug()
+            ]);
+        }else{
+            return $this->redirectToRoute('participation_index',[
+                'slug' => $participation->getActivity()->getSlug()
+            ]);
+        }
     }
     /**
-     * permet de valider une participation
+     * permet d'invalider une participation
      * @Route("/participation/{id}/invalidate", name="participation_invalidate")
      * @param Participation $participation
      * @return Response
@@ -92,8 +102,14 @@ class ParticipationController extends AbstractController
         $this->em->flush();
         $etudiant = $participation->getEtudiant()->getUser();
         $this->addFlash("danger","Vous avez invalidé la participation ".$etudiant->getFirstname()." ".$etudiant->getLastname());
-        return $this->redirectToRoute('participation_index',[
-            'slug' => $participation->getActivity()->getSlug()
-        ]);
+        if($participation->getActivity()->getClub() == null){
+            return $this->redirectToRoute('amicale_participation_index',[
+                'slug' => $participation->getActivity()->getSlug()
+            ]);
+        }else{
+            return $this->redirectToRoute('participation_index',[
+                'slug' => $participation->getActivity()->getSlug()
+            ]);
+        }
     }
 }

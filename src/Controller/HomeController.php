@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class HomeController extends AbstractController
 {
@@ -26,7 +27,7 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        $activities = $this->activityRep->findBy([],['id' => 'DESC'], 8,0);
+        $activities = $this->activityRep->findBy([],['id' => 'DESC'], 15,0);
         $informations = $this->informationRep->findBy([],['id' => 'DESC'], 8,0);
         return $this->render('home/index.html.twig', [
             'informations' => $informations,

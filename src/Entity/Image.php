@@ -24,7 +24,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $activity;
 

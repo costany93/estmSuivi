@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ParticipationController!{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+
+       <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="jumbotron">
+                    <h4>Informations sur l'activité</h4>
+                    <p><i class="fas fa-calendar-alt"></i> Date {{activity.startDate|date('d-m-Y H')}}H</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Lieu {{activity.lieu}}</p>
+                    
+                    <p><strong>Description</strong> <br>{{activity.description}}</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Etat</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% for participation in activity.participations %}
+                            {% set etudiant = participation.etudiant.user %}
+                            <tr>
+                                <td>{{etudiant.firstname}}</td>
+                                <td>{{etudiant.lastname}}</td>
+                                <td>{{participation.state}}</td>
+                                {% if participation.state == null %}
+                                    <td>
+                                        <a href="{{path('participation_validate',{id: participation.id})}}" class="btn btn-success">Valider</a>
+                                        <a href="{{path('participation_invalidate',{id: participation.id})}}" class="btn btn-danger">Invalider</a>
+                                    </td>
+                                {% elseif participation.state == false %}
+                                    <td>
+                                        <a href="{{path('participation_invalidate',{id: participation.id})}}" class="btn btn-success">Valider</a>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <a href="{{path('participation_invalidate',{id: participation.id})}}" class="btn btn-danger">Invalider</a>
+                                    </td>
+                                {% endif %}
+                                
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+       </div>
+    </div>
+{% endblock %}

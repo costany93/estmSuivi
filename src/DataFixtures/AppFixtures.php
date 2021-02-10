@@ -182,7 +182,7 @@ class AppFixtures extends Fixture
                 ;
                 $manager->persist($clubInfo);
             }
-            //Ajout de quelques activités
+            //Ajout de quelques activités du club
             for($a = 0; $a < mt_rand(5,15);$a++){
                 $activity = new Activity();
                 $activity->setDescription($faker->paragraph())
@@ -195,8 +195,31 @@ class AppFixtures extends Fixture
             }
             $manager->persist($nclub);
             $clubTable[] = $nclub;
+
         }
 
+        for($j = 0; $j < mt_rand(3,7); $j++){
+            //ajout des informations de l'amicale
+            $clubInfo = new Information();
+            $clubInfo->setContent($faker->paragraph())
+            ->setTitle($faker->sentence(15))
+            ->setCoverImage($faker->imageUrl())
+            ->setClub(null)
+            ;
+            $manager->persist($clubInfo);
+        }
+        //Ajout de quelques activités de l'amicale
+        for($a = 0; $a < mt_rand(5,15);$a++){
+            $activity = new Activity();
+            $activity->setDescription($faker->paragraph())
+                    ->setLieu('Salle des activités')
+                    ->setStartDate($faker->dateTimeBetween('now','+3 months'))
+                    ->setClub(null)
+                    ->setTitle($faker->paragraph())
+            ;
+            $manager->persist($activity);
+        }
+        
         //Ajout des étudiants
         for($i = 0;$i < 30; $i++){
             //création d'utilisateur étudiant
