@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ActivityController!{% endblock %}
+
+{% block body %}
+    <div id="club-section" style="background-image: url({{asset('build/images/logo.png')}})">
+            <div class="club-inner body-begin dark-overlay">
+                <div class="container">
+                        <h1 class="text-white text-shadow-club">Amicale vous souhaite la bienvenue
+                        </h1>
+                        <h2 class="text-white text-shadow-club">{{app.user.firstname}} {{app.user.lastname}}</h2>
+                        <h2 class="text-white text-shadow-club">Section information</h2>
+                </div>
+            </div>
+    </div>
+
+
+    <div class="container">
+        {% include "shared/_navPillAmicale.html.twig"%}
+    </div>
+    <div class="container-fluid mt-4 my-3">
+            <div class="container ">
+                <div class="row">
+                    {% for information in informations %}
+                        {% include "shared/_cardAmicaleInfo.html.twig" with {'information': information } %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

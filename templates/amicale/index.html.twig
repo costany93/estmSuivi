@@ -2,8 +2,7 @@
 {% block title %}Amicale - ESTM{% endblock %}
 
 {% block body %}
-    <div class="container body-begin">
-        <div id="club-section" style="background-image: url({{asset('build/images/logo.png')}})">
+    <div id="club-section" style="background-image: url({{asset('build/images/logo.png')}})">
             <div class="club-inner body-begin dark-overlay">
                 <div class="container">
                         <h1 class="text-white text-shadow-club">Amicale vous souhaite la bienvenue
@@ -11,7 +10,10 @@
                         <h2 class="text-white text-shadow-club">{{app.user.firstname}} {{app.user.lastname}}</h2>
                 </div>
             </div>
-        </div>
+    </div>
+
+    {% include "shared/_navPillAmicale.html.twig" %}
+    <div class="container body-begin">
 
         <div id="third-section">
             <div class="container-fluid">
@@ -49,20 +51,20 @@
 
 
         <div id="third-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="text-center estm-text-color-blue">Informations récemment mise en ligne</h2>
-                </div>
-                {% if is_granted('ROLE_ADMIN') %}
+            <div class="container-fluid">
+                <div class="row">
                     <div class="col-lg-12">
-                        <div class="row d-flex justify-content-center">
-                            <a href="{{path('amicale_information_new')}}" class="btn btn-success">Nouvelle information</a>
-                        </div>
+                        <h2 class="text-center estm-text-color-blue">Informations récemment mise en ligne</h2>
                     </div>
-                {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="col-lg-12">
+                            <div class="row d-flex justify-content-center">
+                                <a href="{{path('amicale_information_new')}}" class="btn btn-success">Nouvelle information</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
         <div class="container-fluid mt-4 my-3">
             <div class="container ">
                 <div class="row">
@@ -80,5 +82,5 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 {% endblock %}

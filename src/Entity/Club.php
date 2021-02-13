@@ -72,12 +72,18 @@ class Club
      */
     private $president;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="club")
+     */
+    private $discussions;
+
     public function __construct()
     {
         $this->informations = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
         $this->memberships = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
     }
 
     /**
@@ -302,6 +308,36 @@ class Club
         }
 
         $this->president = $president;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Discussion[]
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): self
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions[] = $discussion;
+            $discussion->setClub($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): self
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getClub() === $this) {
+                $discussion->setClub(null);
+            }
+        }
 
         return $this;
     }

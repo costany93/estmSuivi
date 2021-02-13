@@ -41,7 +41,7 @@
                     {% if user.etudiant.club is not null %}
                         <a href="{{path('club_acceuil',{slug: user.etudiant.club.slug})}}" class="btn btn-estm-green btn-block">{{user.etudiant.club.nom}}</a>
                     {% else %}
-                        <a href="{{path('club_index4')}}" class="btn btn-estm-green btn-block">Rejoignez un club</a>
+                        <a href="{{path('club_index')}}" class="btn btn-estm-green btn-block">Rejoignez un club</a>
                     {% endif %}
                     
                 </div>

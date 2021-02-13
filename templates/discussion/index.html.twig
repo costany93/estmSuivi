@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DiscussionController!{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        {#Block barre de navigation du club#}
+        <div>
+            {% include "shared/_navPillClub.html.twig" with {'club': club} %} 
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 bg-light ombre">
+                <h5>Avez-vous une préoccupation?</h5>
+                <h6>Poster là afin de recevoir de l'aide</h6>
+                <div class='p-2'>
+                    {{form_start(form)}}
+                        {{form_widget(form)}}
+                        {% if is_granted('ROLE_ETUDIANT') %}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            Poster
+                            </button>
+                        {% endif %}
+                        
+                    {{form_end(form)}}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h5 class="text-center">Avez-vous une réponse à leurs préoccupations? Si oui répondez-les</h5>
+                {% for discussion in club.discussions %}
+                    {% set personne = discussion.etudiant.user %}
+                    <div class="bg-light border mt-2 p-2 ombre">
+                        <p> <strong>{{personne.firstname}} veux savoir : </strong>{{discussion.title}}</p>
+                        {# composer require twig/intl-extra pour activer le format_datetime#}
+                        <div> Poster le {{discussion.createdAt | date('Y-m-d')}} <a href="{{path('answer_index',{slug: discussion.slug})}}" class="text-primary">Répondre</a>
+                            <span class="text-danger text-right">{{discussion.answers|length()}} Réponses </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}

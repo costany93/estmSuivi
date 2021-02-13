@@ -71,9 +71,21 @@ class Etudiant
      */
     private $participations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="etudiant", orphanRemoval=true)
+     */
+    private $discussions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="etudiant", orphanRemoval=true)
+     */
+    private $answers;
+
     public function __construct()
     {
         $this->participations = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
 
@@ -272,6 +284,66 @@ class Etudiant
             // set the owning side to null (unless already changed)
             if ($participation->getEtudiant() === $this) {
                 $participation->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Discussion[]
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): self
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions[] = $discussion;
+            $discussion->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): self
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getEtudiant() === $this) {
+                $discussion->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getEtudiant() === $this) {
+                $answer->setEtudiant(null);
             }
         }
 

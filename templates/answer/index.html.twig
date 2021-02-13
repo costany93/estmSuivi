@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réponse - ESTM{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        {% include "shared/_navPillClub.html.twig" with {club: club} %}
+        <div class="row mt-3">
+            <div class="col-md-4 estmBlue text-white">
+                {{form_start(form)}}
+                    {{form_widget(form)}}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-paper-plane"></i>
+                        répondre 
+                    </button>
+                {{form_end(form)}}
+                <h6 class="mt-2">Préoccupation posté par {{discussion.etudiant.user.firstname}}</h6>
+                <h5>{{discussion.title}}</h5>
+                <h6 class="mt-2">Contenu détaillé</h6>
+                <h5>{{discussion.content}}</h5>
+            </div>
+            <div class="col-md-8">
+                <h4 class="text-center">Ce que les autres pensent de la question</h4>
+                {% for answer in answers %}
+                {% set personne = answer.etudiant.user %}
+                    <div class="bg-light p-1 border mt-2">
+                            <p>{{personne.firstname}} {{personne.lastname}} posté le <strong>{{answer.createdAt | date('Y-m-d')}}</strong></p>
+                            <h5>{{answer.content}}</h5>
+                            {# composer require twig/intl-extra pour activer le format_datetime#}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

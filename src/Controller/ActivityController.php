@@ -41,7 +41,7 @@ class ActivityController extends AbstractController
      * @Route("/activity/{slug}/index", name="activity_index")
      * @param Club $club
      * @return Response
-     * @Security("(is_granted('ROLE_ETUDIANT')) or is_granted('ROLE_ADMIN')", message="Vous avez pas accès à cette ressources")
+     * @Security("is_granted('ROLE_ETUDIANT') or is_granted('ROLE_ADMIN')", message="Vous avez pas accès à cette ressources")
      */
     public function index(Club $club): Response
     {
