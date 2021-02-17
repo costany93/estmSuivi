@@ -1,7 +1,9 @@
 <div class="container mt-4">
     <nav class="nav nav-pills nav-fill estmBlue">
         <a class="nav-item nav-link border-right" href="{{path('club_acceuil',{slug: club.slug})}}">Acceuil</a>
-        <a class="nav-item nav-link border-right" href="{{path('adhesion_all',{slug: club.slug})}}">Demande d'adhésion</a>
+        {% if is_granted('ROLE_PRESIDENT_CLUB') or is_granted('ROLE_ADMIN') %}
+            <a class="nav-item nav-link border-right" href="{{path('adhesion_all',{slug: club.slug})}}">Demande d'adhésion</a>
+        {% endif %}
         <a class="nav-item nav-link border-right" href="{{path('activity_index',{slug: club.slug})}}">Activités</a>
         <a class="nav-item nav-link border-right" href="{{path('information_index',{slug: club.slug})}}">Informations</a>
         <a class="nav-item nav-link border-right" href="{{path('discussion_index',{slug: club.slug})}}">Forum d'entraide</a>

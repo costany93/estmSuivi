@@ -4,14 +4,17 @@
 
 {% block body %}
     <div class="container body-begin">
+        {% include "shared/_navPillClub.html.twig" with {'club': discussion.club} %} 
         <div class="row mt-3">
             <div class="col-md-4 estmBlue text-white">
                 {{form_start(form)}}
                     {{form_widget(form)}}
-                    <button type="submit" class="btn btn-success">
+                    {% if is_granted('ROLE_PRESIDENT_CLUB') or is_granted('ROLE_ETUDIANT') %}
+                        <button type="submit" class="btn btn-success">
                         <i class="fas fa-paper-plane"></i>
                         répondre 
                     </button>
+                    {% endif %}
                 {{form_end(form)}}
                 <h6 class="mt-2">Préoccupation posté par {{discussion.etudiant.user.firstname}}</h6>
                 <h5>{{discussion.title}}</h5>

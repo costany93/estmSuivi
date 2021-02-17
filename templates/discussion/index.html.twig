@@ -30,7 +30,7 @@
                 {% for discussion in club.discussions %}
                     {% set personne = discussion.etudiant.user %}
                     <div class="bg-light border mt-2 p-2 ombre">
-                        <p> <strong>{{personne.firstname}} veux savoir : </strong>{{discussion.title}}</p>
+                        <p> <strong>{{personne.firstname}} veut savoir : </strong>{{discussion.title}}</p>
                         {# composer require twig/intl-extra pour activer le format_datetime#}
                         <div> Poster le {{discussion.createdAt | date('Y-m-d')}} <a href="{{path('answer_index',{slug: discussion.slug})}}" class="text-primary">Répondre</a>
                             <span class="text-danger text-right">{{discussion.answers|length()}} Réponses </span>
