@@ -134,7 +134,7 @@ class ClubController extends AbstractController
         
         /**
          * permet de créer un nouveau club
-         * @route("/club/create", name="club_create")
+         * @route("/admin/club/create", name="club_create")
          * @param Request
          * @param UniqueFileUpload $uniqueFileUpload
          * @return Response
@@ -163,7 +163,7 @@ class ClubController extends AbstractController
 
                 $this->addFlash('success','Le nouveau a été créé avec success vous pouvez y accédez');
 
-                return $this->redirectToRoute('club_index',[
+                return $this->redirectToRoute('admin_club_index',[
                     'clubs' => $clubs
                 ]);
             }

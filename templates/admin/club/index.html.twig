@@ -1,0 +1,44 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}GESTION DES CLUBS{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        <h1 class="text-center">GESTION DES CLUBS</h1>
+        <a href="{{path('club_create')}}" class="btn btn-estm-green">Nouveau club</a>
+        <table class="table table-striped table-bordered ">
+            <thead class="estmGreen text-white">
+                <th>Nom du club</th>
+                <th>Nombre de membres</th>
+                <th>Nombre d'activités</th>
+                <th>Président</th>
+                <th>Accès</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for club in clubs %}
+                    <tr>
+                        <td>{{club.nom}}</td>
+                        <td><i class="badge estmBlue text-white">{{club.etudiants | length}}</i></td>
+                        <td><i class="badge estmBlue text-white">{{club.activities | length}}</i></td>
+                        {% if club.president is null %}
+                            <td>
+                                <a href="{{path('club_students',{slug: club.slug})}}" class="btn btn-block btn-danger" target="_blank">Definir le president</a>
+                            </td>
+                        {% else %}
+                            <td>{{club.president.etudiant.user.firstname}} {{club.president.etudiant.user.lastname}}</td>
+                        {% endif %}
+                        <td>
+                            <a href="{{path('club_acceuil',{slug: club.slug})}}" class="btn btn-block btn-estm-green" target="_blank">Accédez</a>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

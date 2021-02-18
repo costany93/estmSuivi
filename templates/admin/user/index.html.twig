@@ -1,0 +1,31 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Gestions des adminstrateurs{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        {% include "shared/admin/_navPillUser.html.twig" %}
+        <h4 class="text-center">Listes des administrateurs du site</h4>
+        <div class="col-lg-6 my-2">
+            <a href="{{path('account_user_create')}}" class="btn btn-estm-green">Nouvel administrateur</a>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </thead>
+            <tbody>
+                {% for user in admins %}
+                    {% for role in user.roles %}
+                        {% if role == 'ROLE_ADMIN' %}
+                            <tr>
+                                <td>{{user.firstname}}</td>
+                                <td>{{user.lastname}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

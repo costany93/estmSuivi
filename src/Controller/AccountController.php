@@ -26,25 +26,32 @@ class AccountController extends AbstractController
     }
     /**
      * permet de créer un nouvelle utilisateur
-     * @Route("/account/user/create", name="account_user_create")
+     * @Route("/admin/account/user/create", name="account_user_create")
      * @param Request
      * @return Response
      */
     public function create(Request $request): Response
     {
         $user = new User();
+        $role = $this->roleRepository->findOneBy(['title' => 'ROLE_ADMIN']);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $password = $this->encoder->encodePassword($user, $user->getHashPassword());
-            $user->setHashPassword($password);
-            $this->em->persist($user);
-            $this->em->flush();
+            if($form->get('uniquePassword')->getData() === "superadministrateur"){
+                $password = $this->encoder->encodePassword($user, $user->getHashPassword());
+                $user->setHashPassword($password);
+                $user->addUserRole($role);
+                $this->em->persist($user);
+                $this->em->flush();
 
-            $this->addFlash("success", "Utilisateur ajouter avec success");
-            return $this->redirectToRoute('account_etudiant_create');
+                $this->addFlash("success", "Adminstrateur ajouter avec success");
+                return $this->redirectToRoute('account_user_create');
+            }else{
+                $this->addFlash("danger", "Le mot de passe unique qui vous permet d'ajouter un nouvel administrateur est érroné, impossible d'ajouter l'administrateur");
+                return $this->redirectToRoute('account_user_create');
+            }
         }
         return $this->render('account/createUser.html.twig', [
             'form' => $form->createView(),
@@ -53,7 +60,7 @@ class AccountController extends AbstractController
 
     /**
      * permet d'ajouter un nouvel étudiant
-     * @Route("/account/etudiant/create", name="account_etudiant_create")
+     * @Route("admin/account/etudiant/create", name="account_etudiant_create")
      * @param Request
      * @return Response
      */

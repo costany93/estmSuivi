@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-sm fixed-top navbar-dark estmGreen">
+            <div class="container">
+                <a href="{{path('home_index')}}" class="navbar-brand">
+                    <img src="{{asset('build/images/logo.png')}}" class="navbar-logo" alt="">
+                </a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#menuPrincipale">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuPrincipale">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{{path('admin_club_index')}}" class="nav-link">
+                                Gestion des clubs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{path('admin_etudiant_index')}}" class="nav-link">
+                                Gestion des utilisateur
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        {% if app.user %}
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" id="navbarAccountLink" data-toggle="dropdown">{{app.user.lastname}}</a>
+                                <div class="dropdown-menu dropdown-menu-right" arial-labelledby="navbarAccountLink">
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{path('account_logout')}}" class="dropdown-item">Déconnexion</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                            <a href="{{path('account_login')}}" class="nav-link">
+                                Se connecter
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% for label,messages in app.flashes %}
+            <div class="container my-3 body-begin">
+                <div class="alert alert-{{label}}">
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}

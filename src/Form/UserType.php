@@ -32,6 +32,9 @@ class UserType extends ApplicationType
         ->add('email',EmailType::class,$this->getConfiguration('Email','Entrer votre email'))
         ->add('phone',NumberType::class,$this->getConfiguration('Numéro de téléphone','Entrer votre numéro de téléphone'))
         ->add('hashPassword',PasswordType::class,$this->getConfiguration('Mot de passe','Entrer votre mot de passe'))
+        ->add('uniquePassword',PasswordType::class,$this->getConfiguration('Mot de passe unique de création d\'administrateur','Entrez le mot de passe qui vous permet de créer un nouvel administrateur',[
+            'mapped' => false
+        ]))
         ;
     }
 

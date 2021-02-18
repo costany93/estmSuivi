@@ -55,6 +55,8 @@ class User implements UserInterface
      */
     private $hashPassword;
 
+    private $uniquePassword;
+
     /**
      * @ORM\OneToOne(targetEntity=Etudiant::class, mappedBy="user", cascade={"persist", "remove"})
      */
@@ -73,6 +75,10 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function uniquePassword(): ?string
+    {
+        return $this->uniquePassword;
     }
 
     public function getFirstname(): ?string

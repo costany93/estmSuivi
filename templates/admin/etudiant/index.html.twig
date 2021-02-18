@@ -1,0 +1,14 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}GESTIONS DES ETUDIANTS{% endblock %}
+
+{% block body %}
+    <div class="container body-begin">
+        <h1 class="text-center">Gestion des étudiants</h1>
+        {% include "shared/admin/_navPillUser.html.twig" %}
+        <div class="col-lg-6 mt-2">
+            <a href="{{path('account_etudiant_create')}}" class="btn btn-estm-green">Nouvel étudiant</a>
+        </div>
+        <div class="col-lg-6"></div>
+    </div>
+{% endblock %}
